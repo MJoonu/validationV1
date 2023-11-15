@@ -2,6 +2,8 @@ package hello.itemservice.web.validation;
 
 import hello.itemservice.domain.item.Item;
 import hello.itemservice.domain.item.ItemRepository;
+import hello.itemservice.domain.item.SaveCheck;
+import hello.itemservice.domain.item.UpdateCheck;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -44,9 +46,32 @@ public class ValidationItemControllerV3 {
     }
 
 
+//    @PostMapping("/add")
+//    public String addItem(@Validated @ModelAttribute Item item, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) {
+//                        // ㄴ 위 Annotation 을 통해 Validation 이 적용됨
+//
+//        if (item.getPrice() != null && item.getQuantity() != null) {
+//            int resultPrice = item.getPrice() * item.getQuantity();
+//            if (resultPrice < 10000) {
+//                bindingResult.reject("totalPriceMin", new Object[]{10000, resultPrice}, null);
+//            }
+//        }
+//
+//
+//        if (bindingResult.hasErrors()) {
+//            log.info("errors={}", bindingResult);
+//            return "validation/v3/addForm";
+//        }
+//
+//        Item savedItem = itemRepository.save(item);
+//        redirectAttributes.addAttribute("itemId", savedItem.getId());
+//        redirectAttributes.addAttribute("status", true);
+//        return "redirect:/validation/v3/items/{itemId}";
+//    }
+
     @PostMapping("/add")
-    public String addItem(@Validated @ModelAttribute Item item, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) {
-                        // ㄴ 위 Annotation 을 통해 Validation 이 적용됨
+    public String addItemV2(@Validated(SaveCheck.class) @ModelAttribute Item item, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) {
+                            // ㄴ 위 Annotation 을 통해 Validation 이 적용됨
 
         if (item.getPrice() != null && item.getQuantity() != null) {
             int resultPrice = item.getPrice() * item.getQuantity();
@@ -74,8 +99,28 @@ public class ValidationItemControllerV3 {
         return "validation/v3/editForm";
     }
 
+//    @PostMapping("/{itemId}/edit")
+//    public String edit(@PathVariable Long itemId, @Validated @ModelAttribute Item item, BindingResult bindingResult) {
+//
+//        if (item.getPrice() != null && item.getQuantity() != null) {
+//            int resultPrice = item.getPrice() * item.getQuantity();
+//            if (resultPrice < 10000) {
+//                bindingResult.reject("totalPriceMin", new Object[]{10000, resultPrice}, null);
+//            }
+//        } // 특정 메세지가 아닌 종합 에러 메세지
+//
+//        if (bindingResult.hasErrors()) {
+//            log.info("errors={}", bindingResult);
+//            return "validation/v3/editForm";
+//        } // 에러 발생시 돌아가기
+//
+//        itemRepository.update(itemId, item);
+//
+//        return "redirect:/validation/v3/items/{itemId}";
+//    }
+
     @PostMapping("/{itemId}/edit")
-    public String edit(@PathVariable Long itemId, @Validated @ModelAttribute Item item, BindingResult bindingResult) {
+    public String editV2(@PathVariable Long itemId, @Validated(UpdateCheck.class) @ModelAttribute Item item, BindingResult bindingResult) {
 
         if (item.getPrice() != null && item.getQuantity() != null) {
             int resultPrice = item.getPrice() * item.getQuantity();
