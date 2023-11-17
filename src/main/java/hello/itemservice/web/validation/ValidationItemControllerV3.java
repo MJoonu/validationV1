@@ -8,10 +8,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.StringUtils;
 import org.springframework.validation.*;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -19,7 +17,7 @@ import java.util.List;
 
 @Slf4j
 @Controller
-@RequestMapping("/validation/v3/items")
+@RequestMapping("/validation/v4/items")
 @RequiredArgsConstructor
 public class ValidationItemControllerV3 {
 
@@ -98,7 +96,6 @@ public class ValidationItemControllerV3 {
         model.addAttribute("item", item);
         return "validation/v3/editForm";
     }
-
 //    @PostMapping("/{itemId}/edit")
 //    public String edit(@PathVariable Long itemId, @Validated @ModelAttribute Item item, BindingResult bindingResult) {
 //
